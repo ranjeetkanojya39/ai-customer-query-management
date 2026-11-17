@@ -349,7 +349,7 @@ Possible future enhancements include:
 
 **Ranjeet Kanojiya**
 
-Python | Django | Django REST Framework | MySQL | REST APIs | AI Integration
+Python | Django | Django REST Framework | SQLite | REST APIs | AI Integration
 
 GitHub: github.com/ranjeetkanojya39
 
