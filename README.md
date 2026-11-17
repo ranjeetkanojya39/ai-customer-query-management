@@ -46,7 +46,7 @@ If the Gemini API is unavailable or no API key is configured, the application us
 
 | Technology | Purpose |
 |---|---|
-| Python | Backend programming language |
+| Python 3.10+ | Backend programming language |
 | Django | Web application framework |
 | Django REST Framework | REST API development |
 | SQLite | Database |
@@ -92,7 +92,7 @@ query_management/
 
 ## 5. Installation and Setup
 
-Follow these steps to run the project locally.
+Follow these steps to run the project locally. Python 3.10 or higher is required.
 
 ### Step 1: Clone the Repository
 
@@ -107,10 +107,18 @@ cd query_management
 python -m venv venv
 ```
 
-Activate the environment on Windows:
+Activate the environment:
+
+Windows:
 
 ```bash
 venv\Scripts\activate
+```
+
+macOS / Linux:
+
+```bash
+source venv/bin/activate
 ```
 
 ### Step 3: Install Dependencies
@@ -129,15 +137,23 @@ Windows:
 copy .env.example .env
 ```
 
+macOS / Linux:
+
+```bash
+cp .env.example .env
+```
+
 Open the `.env` file and configure your Gemini API key:
 
 ```env
 GEMINI_API_KEY=your_actual_api_key
 ```
 
-Get your free API key from Google AI Studio.
+Get your free API key from Google AI Studio: https://aistudio.google.com/app/apikey
 
 Keep your API key private. Never upload your `.env` file to GitHub.
+
+> If `GEMINI_API_KEY` is left empty, the application still works using the rule-based fallback.
 
 ### Step 5: Apply Database Migrations
 
@@ -161,6 +177,8 @@ The application will be available at:
 
 http://127.0.0.1:8000/
 
+Note: the root URL has no page. Use `/api/docs/` for Swagger and `/api/...` for the APIs.
+
 ## 6. API Documentation
 
 Swagger documentation is available at:
@@ -168,6 +186,25 @@ Swagger documentation is available at:
 http://127.0.0.1:8000/api/docs/
 
 You can explore API endpoints and test requests using the Swagger interface.
+
+### Testing Protected APIs in Swagger
+
+To test protected APIs in Swagger: register or login to get a token, click **Authorize**,
+and enter `Token your_authentication_token` (include the word "Token" followed by a space).
+
+### Quick Test Flow
+
+1. `POST /api/register/` and copy the token
+2. Click **Authorize** in Swagger and enter `Token <token>`
+3. `POST /api/queries/` to create a query
+4. `POST /api/queries/{id}/analyze/` to run AI analysis
+5. `PATCH /api/queries/{id}/status/` to update status
+6. `GET /api/queries/dashboard/` to view statistics
+
+### More Documentation
+
+- [API_DOCS.md](API_DOCS.md): sample requests and responses for every endpoint
+- [EXPLANATION.md](EXPLANATION.md): AI model, integration, response handling and challenges
 
 ## 7. API Endpoints
 
@@ -231,7 +268,7 @@ Expected Output:
 
 ### AI Fallback Mechanism
 
-If the Gemini API is unavailable or the API key is not configured, the application uses a rule-based fallback mechanism.
+If the Gemini API is unavailable or the API key is not configured, the application uses a rule-based fallback mechanism (`ai_source` will be `"fallback"`).
 
 This helps the application continue analysing customer queries without depending entirely on the external AI service.
 
