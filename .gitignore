@@ -4,3 +4,5 @@ __pycache__/
 *.pyc
 venv/
 .venv/
+list_models.py
+test_generate.py

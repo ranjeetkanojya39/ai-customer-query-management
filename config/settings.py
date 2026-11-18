@@ -100,3 +100,4 @@ LOGGING = {
     "handlers": {"console": {"class": "logging.StreamHandler"}},
     "root": {"handlers": ["console"], "level": "INFO"},
 }
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "ranjeet")
